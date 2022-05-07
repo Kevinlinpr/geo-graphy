@@ -67,7 +67,7 @@ async def calculate(request_data: Item):
 
     import numpy as np
     base = "/Users/kevinlinpr/Documents/filesystem/"
-    fake = "/Users/kevinlinpr/Documents/fake_filesystem/"
+    fake = "/Users/kevinlinpr/Documents/filesystem/"
     # base = ""
     prehandler = path.split('/')
     file_name = prehandler[len(prehandler) - 1]
