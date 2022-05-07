@@ -67,6 +67,7 @@ async def calculate(request_data: Item):
 
     import numpy as np
     base = "/Users/kevinlinpr/Documents/filesystem/"
+    fake = "/Users/kevinlinpr/Documents/fake_filesystem/"
     # base = ""
     prehandler = path.split('/')
     file_name = prehandler[len(prehandler) - 1]
@@ -74,7 +75,7 @@ async def calculate(request_data: Item):
 
     tmp_txt_name = ''
     if extension_name == 'FCTEM' or extension_name == 'fctem':
-        tmp_txt_name = base + path + '.tmptxt'
+        tmp_txt_name = fake + path + '.tmptxt'
         txt_context = fctem_to_txt(base + path)
         txt_file = open(tmp_txt_name,'w+')
         txt_file.write(txt_context)
