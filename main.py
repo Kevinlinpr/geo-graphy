@@ -44,12 +44,26 @@ def getArgument():
 async def getChartInfo(request_data: Item):
     path = request_data.path
     base = "/Users/kevinlinpr/Documents/filesystem/"
-    file = open(base + path)
-    # 这里解码
-    line = file.readline()
-    info = line.split()
-    pointNumb = int(eval(info[0]))
-    windowNumb = int(eval(info[1]))
+
+    pointNumb = 0
+    windowNumb = 0
+    prehandler = path.split('/')
+    file_name = prehandler[len(prehandler) - 1]
+    extension_name = file_name.split('.')[1]
+
+    if extension_name == 'FCTEM' or extension_name == 'fctem':
+        txt_context = fctem_to_txt(base + path)
+        txt_context_split = txt_context.split()
+        pointNumb = int(eval(txt_context_split[0]))
+        windowNumb = int(eval(txt_context_split[1]))
+    else:
+        file = open(base + path)
+        line = file.readline()
+        info = line.split()
+        pointNumb = int(eval(info[0]))
+        windowNumb = int(eval(info[1]))
+        file.close()
+    
     return {
         'pointNumb': pointNumb,
         'windowNumb': windowNumb
@@ -83,7 +97,6 @@ async def calculate(request_data: Item):
     else:
         tmp_txt_name = base + path
     
-    
     file = open(tmp_txt_name)
     # 解码
     pathArr = path.split('/')
@@ -116,6 +129,7 @@ async def calculate(request_data: Item):
             pointArr.append(tmp)
         lineCount += 1
     # while end
+    file.close()
     # print(pointArr)
     grid = [([0] * int(eval(rowInfo))) for p in range(int(eval(columnInfo)))]
     # grid = [[0] * int(eval(rowInfo))] * int(eval(columnInfo))
