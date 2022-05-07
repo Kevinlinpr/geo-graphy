@@ -1,4 +1,6 @@
 # importing necessary libraries
+from asyncore import write
+from distutils import extension
 from fastapi import FastAPI, File, UploadFile, Response
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -66,7 +68,22 @@ async def calculate(request_data: Item):
     import numpy as np
     base = "/Users/kevinlinpr/Documents/filesystem/"
     # base = ""
-    file = open(base + path)
+    prehandler = path.split('/')
+    file_name = prehandler[len(prehandler) - 1]
+    extension_name = file_name.split('.')[1]
+
+    tmp_txt_name = ''
+    if extension_name == 'FCTEM' or extension_name == 'fctem':
+        tmp_txt_name = base + path + '.tmptxt'
+        txt_context = fctem_to_txt(base + path)
+        txt_file = open(tmp_txt_name,'w+')
+        txt_file.write(txt_context)
+        txt_file.close()
+    else:
+        tmp_txt_name = base + path
+    
+    
+    file = open(tmp_txt_name)
     # 解码
     pathArr = path.split('/')
     resultName = pathArr[2] + '_' + pathArr[4] + '_' + pathArr[5] + '.png'
