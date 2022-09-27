@@ -182,8 +182,10 @@ async def calculate(request_data: Item):
 
 @app.post('/api/get_kriging')
 async def kriging(request_data: Item):
+    base = "/Users/kevinlinpr/Documents/filesystem/"
     path = request_data.path
-    file_like = open(path, mode="rb")
+    resultPath = base + path
+    file_like = open(resultPath, mode="rb")
     return StreamingResponse(file_like, media_type="image/png")
 
 if __name__ == '__main__':
