@@ -180,6 +180,12 @@ async def calculate(request_data: Item):
     file_like = open(resultPath, mode="rb")
     return StreamingResponse(file_like, media_type="image/png")
 
+@app.post('/api/get_kriging')
+async def kriging(request_data: Item):
+    path = request_data.path
+    file_like = open(path, mode="rb")
+    return StreamingResponse(file_like, media_type="image/png")
+
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app=app,
