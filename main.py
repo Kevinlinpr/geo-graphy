@@ -12,6 +12,7 @@ import matplotlib.ticker as ticker
 import matplotlib.font_manager as fm
 import json
 from encode import fctem_to_txt
+import os
 
 app = FastAPI()
 
@@ -44,6 +45,12 @@ def getArgument():
 async def getChartInfo(request_data: Item):
     path = request_data.path
     base = "/Users/kevinlinpr/Documents/filesystem/"
+
+    if os.path.exists(base + path):
+        return {
+            'pointNumb': 0,
+            'windowNumb': 0
+        }
 
     pointNumb = 0
     windowNumb = 0
@@ -192,5 +199,4 @@ if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app=app,
                 host="0.0.0.0",
-                port=8003,
-                workers=1)
+                port=8003)

@@ -13,6 +13,7 @@ import matplotlib.font_manager as fm
 import json
 from encode import fctem_to_txt
 import uvicorn
+import os
 
 app = FastAPI()
 
@@ -45,6 +46,12 @@ def getArgument():
 async def getChartInfo(request_data: Item):
     path = request_data.path
     base = "/Users/kevinlinpr/Documents/filesystem/"
+
+    if os.path.exists(base + path):
+        return {
+            'pointNumb': 0,
+            'windowNumb': 0
+        }
 
     pointNumb = 0
     windowNumb = 0
