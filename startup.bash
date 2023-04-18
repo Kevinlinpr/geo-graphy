@@ -1,1 +1,1 @@
-gunicorn main_next:app -b 0.0.0.0:8003 -w 10 -k uvicorn.workers.UvicornWorker --daemon 
+gunicorn main_next:app -b 0.0.0.0:8003 -w 10 --log-file log.txt -k uvicorn.workers.UvicornWorker --daemon 
